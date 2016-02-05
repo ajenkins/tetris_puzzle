@@ -155,7 +155,7 @@ var shapeFitsAt = function(board, shape, position) {
 };
 
 var insertShape = function(board, shape, position, char) {
-  board = _.cloneDeep(board);
+  board = _.clone(board);
   for (var i = 0; i < shape.spots.length; i++) {
     var x = shape.spots[i][0];
     var y = shape.spots[i][1];
@@ -174,7 +174,7 @@ function solvedPuzzle(board, shapes, char) {
   if (shapes.length == 0) {
     return board;
   }
-  board = _.cloneDeep(board)
+  board = _.clone(board)
   curShape = shapes[0];
   otherShapes = shapes.slice(1);
   orientations = curShape.orientations;
@@ -184,7 +184,7 @@ function solvedPuzzle(board, shapes, char) {
         var position = [i, j];
         if (shapeFitsAt(board, orientations[o], position)) {
           board = insertShape(board, orientations[o], position, char);
-          var nextPuzzle = solvedPuzzle(board, otherShapes, nextChar(c));
+          var nextPuzzle = solvedPuzzle(board, otherShapes, nextChar(char));
           if (nextPuzzle) {
             return nextPuzzle;
           }
@@ -197,3 +197,8 @@ function solvedPuzzle(board, shapes, char) {
 
 // Testing code starts here
 // ------------------------
+
+b = new Board(4, 2);
+b.createArray();
+solved = solvedPuzzle(b, [squareShape, squareShape], 'A');
+console.log(solved.boardString());
