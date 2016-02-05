@@ -134,12 +134,6 @@ var printBlock = function(block) {
   return b.toString();
 };
 
-// var curShape = jShape;
-// for (var i = 0; i < curShape.orientations.length; i++) {
-//   console.log(printBlock(curShape.orientations[i]));
-//   console.log('\n');
-// }
-
 var deepClone = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
