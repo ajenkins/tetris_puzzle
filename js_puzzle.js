@@ -1,3 +1,5 @@
+var _ = require('lodash/core');
+
 var Board = function(width, height) {
   this.width = width;
   this.height = height;
@@ -139,11 +141,33 @@ var printBlock = function(block) {
 // }
 
 var shapeFitsAt = function(board, shape) {
-
+  var w = board.width;
+  var h = board.height;
+  for (var j = 0; j < h; j++) {
+    for (var i = 0; i < w; i++) {
+      var shapeFitsHere = true;
+      for (var s = 0; s < shape.spots.length; s++) {
+        var spot = shape.spots[s];
+        var x = spot[0];
+        var y = spot[1];
+        if (board.array[i + x][j + y] != '_') {
+          shapeFitsHere = false;
+        }
+      }
+    }
+  }
 };
 
 var insertShape = function(board, shape, position, char) {
-
+  board = _.cloneDeep(board);
+  for (var i = 0; i < shape.spots.length; i++) {
+    var x = shape.spots[i][0];
+    var y = shape.spots[i][1];
+    board.array[position[0] + x][position[1] + y] = char
+  }
+  // console.log(board.boardString());
+  // console.log('\n');
+  return board;
 };
 
 var nextChar = function(c) {
@@ -154,16 +178,21 @@ function solvedPuzzle(board, shapes, char) {
   if (shapes.length == 0) {
     return board;
   }
+  board = _.cloneDeep(board)
   curShape = shapes[0];
   otherShapes = shapes.slice(1);
   orientations = curShape.orientations;
   for (var o = 0; o < orientations.length; o++) {
-    fitsAt = shapeFitsAt(board, o);
-    if (fitsAt) {
-      insertShape(board, o, fitsAt, char);
-      var nextPuzzle = solvedPuzzle(board, otherShapes, nextChar(c));
-      if (nextPuzzle) {
-        return nextPuzzle;
+    for (var j = 0; j < board.height; j++) {
+      for (var i = 0; i < board.width; i++) {
+        var position = [i, j];
+        if (shapeFitsAt(board, orientations[o], position)) {
+          board = insertShape(board, orientations[o], position, char);
+          var nextPuzzle = solvedPuzzle(board, otherShapes, nextChar(c));
+          if (nextPuzzle) {
+            return nextPuzzle;
+          }
+        }
       }
     }
   }

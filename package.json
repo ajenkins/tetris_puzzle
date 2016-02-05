@@ -1,0 +1,15 @@
+{
+  "name": "talos_puzzle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js_puzzle.js",
+  "dependencies": {
+    "lodash": "^4.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
