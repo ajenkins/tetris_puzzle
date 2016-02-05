@@ -140,22 +140,18 @@ var printBlock = function(block) {
 //   console.log('\n');
 // }
 
-var shapeFitsAt = function(board, shape) {
-  var w = board.width;
-  var h = board.height;
-  for (var j = 0; j < h; j++) {
-    for (var i = 0; i < w; i++) {
-      var shapeFitsHere = true;
-      for (var s = 0; s < shape.spots.length; s++) {
-        var spot = shape.spots[s];
-        var x = spot[0];
-        var y = spot[1];
-        if (board.array[i + x][j + y] != '_') {
-          shapeFitsHere = false;
-        }
-      }
+var shapeFitsAt = function(board, shape, position) {
+  var i = position[0];
+  var j = position[1];
+  for (var s = 0; s < shape.spots.length; s++) {
+    var spot = shape.spots[s];
+    var x = spot[0];
+    var y = spot[1];
+    if (board.array[i + x][j + y] != '_') {
+      return false;
     }
   }
+  return true;
 };
 
 var insertShape = function(board, shape, position, char) {
@@ -198,3 +194,6 @@ function solvedPuzzle(board, shapes, char) {
   }
   return false;
 }
+
+// Testing code starts here
+// ------------------------
