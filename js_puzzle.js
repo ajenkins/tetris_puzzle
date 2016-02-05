@@ -8,10 +8,10 @@ var Board = function(width, height) {
       return this.array;
     } else {
       var arr = [];
-      for (var j = 0; i < this.height; j++) {
-        arr[i] = [];
-        for (var i = 0; j < this.width; i++) {
-          arr[i][j] = '_';
+      for (var j = 0; j < this.height; j++) {
+        arr[j] = [];
+        for (var i = 0; i < this.width; i++) {
+          arr[j][i] = '_';
         }
       }
       this.array = arr
@@ -147,14 +147,7 @@ var shapeFitsAt = function(board, shape, position) {
     var spot = shape.spots[s];
     var x = spot[0];
     var y = spot[1];
-    // console.log(board.toString());
-    // console.log(board.array);
-    // console.log(i);
-    // console.log(x);
-    // console.log(j);
-    // console.log(y);
-    // console.log('\n');
-    if (board.array[i + x][j + y] != '_') {
+    if (board.array[j + x][i + y] != '_') {
       return false;
     }
   }
@@ -166,10 +159,10 @@ var insertShape = function(board, shape, position, char) {
   for (var i = 0; i < shape.spots.length; i++) {
     var x = shape.spots[i][0];
     var y = shape.spots[i][1];
-    board.array[position[0] + x][position[1] + y] = char
+    board.array[position[1] + x][position[0] + y] = char
   }
-  // console.log(board.toString());
-  // console.log('\n');
+  console.log(board.toString());
+  console.log('\n');
   return board;
 };
 
