@@ -211,9 +211,9 @@ function solvedPuzzle(board, shapes, char) {
 // Testing code starts here
 // ------------------------
 
-b = new Board(4, 2);
+b = new Board(8, 5);
 b.createArray();
-var solved = solvedPuzzle(b, [jShape, jShape], 'A');
+var solved = solvedPuzzle(b, [tShape, tShape, jShape, elShape, squareShape, squareShape, straightShape, straightShape, zShape, sShape], 'A');
 if (solved) {
   console.log('Solution:\n');
   console.log(solved.stringify());
