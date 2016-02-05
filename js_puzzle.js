@@ -18,7 +18,8 @@ var Board = function(width, height) {
       return arr;
     }
   };
-  this.toString = function() {
+  this.stringify = function() {
+    debugger;
     arr = this.array;
     strArray = [];
     for (var i = 0; i < arr.length; i++) {
@@ -140,6 +141,13 @@ var printBlock = function(block) {
 //   console.log('\n');
 // }
 
+var deepClone = function(obj) {
+  // console.log(obj);
+  x = JSON.parse(JSON.stringify(obj));
+  // console.log(x);
+  return x;
+};
+
 var shapeFitsAt = function(board, shape, position) {
   var i = position[0];
   var j = position[1];
@@ -160,7 +168,7 @@ var shapeFitsAt = function(board, shape, position) {
 };
 
 var insertShape = function(board, shape, position, char) {
-  board = _.clone(board);
+  // board = _.clone(board);
   for (var i = 0; i < shape.spots.length; i++) {
     var x = shape.spots[i][0];
     var y = shape.spots[i][1];
@@ -179,7 +187,8 @@ function solvedPuzzle(board, shapes, char) {
   if (shapes.length == 0) {
     return board;
   }
-  board = _.clone(board)
+  var origBoard = _.clone(board)
+  origBoard.array = deepClone(board.array);
   curShape = shapes[0];
   otherShapes = shapes.slice(1);
   orientations = curShape.orientations;
@@ -187,9 +196,11 @@ function solvedPuzzle(board, shapes, char) {
     for (var j = 0; j < board.height; j++) {
       for (var i = 0; i < board.width; i++) {
         var position = [i, j];
-        if (shapeFitsAt(board, orientations[o], position)) {
-          board = insertShape(board, orientations[o], position, char);
-          var nextPuzzle = solvedPuzzle(board, otherShapes, nextChar(char));
+        if (shapeFitsAt(origBoard, orientations[o], position)) {
+          // var newBoard = insertShape(_.clone(origBoard), orientations[o], position, char);
+          var newBoard = _.clone(origBoard)
+          newBoard.array = deepClone(origBoard.array);
+          var nextPuzzle = solvedPuzzle(newBoard, otherShapes, nextChar(char));
           if (nextPuzzle) {
             return nextPuzzle;
           }
@@ -205,5 +216,5 @@ function solvedPuzzle(board, shapes, char) {
 
 b = new Board(4, 2);
 b.createArray();
-solved = solvedPuzzle(b, [elShape, elShape], 'A');
-console.log(solved.toString());
+var solved = solvedPuzzle(b, [elShape, elShape], 'A');
+console.log(solved.stringify());
