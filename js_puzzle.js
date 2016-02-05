@@ -8,9 +8,9 @@ var Board = function(width, height) {
       return this.array;
     } else {
       var arr = [];
-      for (var i = 0; i < this.height; i++) {
+      for (var j = 0; i < this.height; j++) {
         arr[i] = [];
-        for (var j = 0; j < this.width; j++) {
+        for (var i = 0; j < this.width; i++) {
           arr[i][j] = '_';
         }
       }
@@ -18,7 +18,7 @@ var Board = function(width, height) {
       return arr;
     }
   };
-  this.boardString = function() {
+  this.toString = function() {
     arr = this.array;
     strArray = [];
     for (var i = 0; i < arr.length; i++) {
@@ -131,7 +131,7 @@ var printBlock = function(block) {
     var j = spot[0];
     b.array[i][j] = 'O';
   }
-  return b.boardString();
+  return b.toString();
 };
 
 // var curShape = jShape;
@@ -147,6 +147,13 @@ var shapeFitsAt = function(board, shape, position) {
     var spot = shape.spots[s];
     var x = spot[0];
     var y = spot[1];
+    // console.log(board.toString());
+    // console.log(board.array);
+    // console.log(i);
+    // console.log(x);
+    // console.log(j);
+    // console.log(y);
+    // console.log('\n');
     if (board.array[i + x][j + y] != '_') {
       return false;
     }
@@ -161,7 +168,7 @@ var insertShape = function(board, shape, position, char) {
     var y = shape.spots[i][1];
     board.array[position[0] + x][position[1] + y] = char
   }
-  // console.log(board.boardString());
+  // console.log(board.toString());
   // console.log('\n');
   return board;
 };
@@ -201,4 +208,4 @@ function solvedPuzzle(board, shapes, char) {
 b = new Board(4, 2);
 b.createArray();
 solved = solvedPuzzle(b, [squareShape, squareShape], 'A');
-console.log(solved.boardString());
+console.log(solved.toString());
