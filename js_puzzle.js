@@ -142,10 +142,7 @@ var printBlock = function(block) {
 // }
 
 var deepClone = function(obj) {
-  // console.log(obj);
-  x = JSON.parse(JSON.stringify(obj));
-  // console.log(x);
-  return x;
+  return JSON.parse(JSON.stringify(obj));
 };
 
 var shapeFitsAt = function(board, shape, position) {
@@ -168,14 +165,11 @@ var shapeFitsAt = function(board, shape, position) {
 };
 
 var insertShape = function(board, shape, position, char) {
-  // board = _.clone(board);
   for (var i = 0; i < shape.spots.length; i++) {
     var x = shape.spots[i][0];
     var y = shape.spots[i][1];
     board.array[position[1] + x][position[0] + y] = char
   }
-  console.log(board.toString());
-  console.log('\n');
   return board;
 };
 
@@ -189,17 +183,18 @@ function solvedPuzzle(board, shapes, char) {
   }
   var origBoard = _.clone(board)
   origBoard.array = deepClone(board.array);
-  curShape = shapes[0];
-  otherShapes = shapes.slice(1);
-  orientations = curShape.orientations;
+  var curShape = shapes[0];
+  var otherShapes = shapes.slice(1);
+  var orientations = curShape.orientations;
   for (var o = 0; o < orientations.length; o++) {
     for (var j = 0; j < board.height; j++) {
       for (var i = 0; i < board.width; i++) {
         var position = [i, j];
+        debugger;
         if (shapeFitsAt(origBoard, orientations[o], position)) {
-          // var newBoard = insertShape(_.clone(origBoard), orientations[o], position, char);
           var newBoard = _.clone(origBoard)
           newBoard.array = deepClone(origBoard.array);
+          newBoard = insertShape(newBoard, orientations[o], position, char);
           var nextPuzzle = solvedPuzzle(newBoard, otherShapes, nextChar(char));
           if (nextPuzzle) {
             return nextPuzzle;
