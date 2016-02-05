@@ -132,8 +132,40 @@ var printBlock = function(block) {
   return b.boardString();
 };
 
-var curShape = jShape;
-for (var i = 0; i < curShape.orientations.length; i++) {
-  console.log(printBlock(curShape.orientations[i]));
-  console.log('\n');
+// var curShape = jShape;
+// for (var i = 0; i < curShape.orientations.length; i++) {
+//   console.log(printBlock(curShape.orientations[i]));
+//   console.log('\n');
+// }
+
+var shapeFitsAt = function(board, shape) {
+
+};
+
+var insertShape = function(board, shape, position, char) {
+
+};
+
+var nextChar = function(c) {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+};
+
+function solvedPuzzle(board, shapes, char) {
+  if (shapes.length == 0) {
+    return board;
+  }
+  curShape = shapes[0];
+  otherShapes = shapes.slice(1);
+  orientations = curShape.orientations;
+  for (var o = 0; o < orientations.length; o++) {
+    fitsAt = shapeFitsAt(board, o);
+    if (fitsAt) {
+      insertShape(board, o, fitsAt, char);
+      var nextPuzzle = solvedPuzzle(board, otherShapes, nextChar(c));
+      if (nextPuzzle) {
+        return nextPuzzle;
+      }
+    }
+  }
+  return false;
 }
