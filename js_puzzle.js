@@ -16,6 +16,14 @@ var Board = function(width, height) {
       return arr;
     }
   };
+  this.boardString = function() {
+    arr = this.array;
+    strArray = [];
+    for (var i = 0; i < arr.length; i++) {
+      strArray.push(arr[i].join(' '));
+    }
+    return strArray.join('\n');
+  }
 };
 
 var Tetromino = function(orientations) {
@@ -117,11 +125,15 @@ var printBlock = function(block) {
   b.createArray();
   for (var m = 0; m < block.spots.length; m++) {
     var spot = block.spots[m];
-    var i = spot[0];
-    var j = spot[1];
+    var i = spot[1];
+    var j = spot[0];
     b.array[i][j] = 'O';
   }
-  console.log(b.array);
+  return b.boardString();
 };
 
-printBlock(j1);
+var curShape = jShape;
+for (var i = 0; i < curShape.orientations.length; i++) {
+  console.log(printBlock(curShape.orientations[i]));
+  console.log('\n');
+}
