@@ -19,7 +19,6 @@ var Board = function(width, height) {
     }
   };
   this.stringify = function() {
-    debugger;
     arr = this.array;
     strArray = [];
     for (var i = 0; i < arr.length; i++) {
@@ -152,13 +151,8 @@ var shapeFitsAt = function(board, shape, position) {
     var spot = shape.spots[s];
     var x = spot[0];
     var y = spot[1];
-    try {
-      if (!board.array[j + x] || board.array[j + x][i + y] != '_') {
-        return false;
-      }
-    }
-    catch(e) {
-      debugger;
+    if (!board.array[j + x] || board.array[j + x][i + y] != '_') {
+      return false;
     }
   }
   return true;
@@ -170,8 +164,8 @@ var insertShape = function(board, shape, position, char) {
     var y = shape.spots[i][1];
     board.array[position[1] + x][position[0] + y] = char
   }
-  console.log(board.stringify());
-  console.log('\n');
+  // console.log(board.stringify());
+  // console.log('\n');
   return board;
 };
 
@@ -192,7 +186,6 @@ function solvedPuzzle(board, shapes, char) {
     for (var j = 0; j < board.height; j++) {
       for (var i = 0; i < board.width; i++) {
         var position = [i, j];
-        debugger;
         if (shapeFitsAt(origBoard, orientations[o], position)) {
           var newBoard = _.clone(origBoard)
           newBoard.array = deepClone(origBoard.array);
