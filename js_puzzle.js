@@ -147,8 +147,13 @@ var shapeFitsAt = function(board, shape, position) {
     var spot = shape.spots[s];
     var x = spot[0];
     var y = spot[1];
-    if (board.array[j + x][i + y] != '_') {
-      return false;
+    try {
+      if (!board.array[j + x] || board.array[j + x][i + y] != '_') {
+        return false;
+      }
+    }
+    catch(e) {
+      debugger;
     }
   }
   return true;
@@ -200,5 +205,5 @@ function solvedPuzzle(board, shapes, char) {
 
 b = new Board(4, 2);
 b.createArray();
-solved = solvedPuzzle(b, [squareShape, squareShape], 'A');
+solved = solvedPuzzle(b, [elShape, elShape], 'A');
 console.log(solved.toString());
