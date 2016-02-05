@@ -170,6 +170,8 @@ var insertShape = function(board, shape, position, char) {
     var y = shape.spots[i][1];
     board.array[position[1] + x][position[0] + y] = char
   }
+  console.log(board.stringify());
+  console.log('\n');
   return board;
 };
 
@@ -211,5 +213,10 @@ function solvedPuzzle(board, shapes, char) {
 
 b = new Board(4, 2);
 b.createArray();
-var solved = solvedPuzzle(b, [elShape, elShape], 'A');
-console.log(solved.stringify());
+var solved = solvedPuzzle(b, [jShape, jShape], 'A');
+if (solved) {
+  console.log('Solution:\n');
+  console.log(solved.stringify());
+} else {
+  console.log('Puzzle could not be solved.');
+}
